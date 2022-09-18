@@ -19,11 +19,11 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore ./webbap/TodosApp.sln -c Release
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build ./webbap/TodosApp.sln --no-restore -c Release
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test ./webbap/TodosApp.sln --no-build --verbosity normal -c Release
     - name: Publish
-      run: dotnet publish --no-build --verbosity normal
+      run: dotnet publish  ./webbap/TodosApp.Web/TodosApp.Web.csproj --no-build --verbosity normal -c Release
   
