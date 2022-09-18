@@ -1,0 +1,36 @@
+name: .NET Build, Test, Publish
+
+on:
+  push:
+    branches: [ "main" ]
+    
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore ./webapp/TodosApp.sln --configuration Release
+    - name: Build
+      run: dotnet build ./webapp/TodosApp.sln --no-restore --configuration Release
+    - name: Test
+      run: dotnet test ./webapp/TodosApp.sln --no-build --verbosity normal --configuration Release --logger trx --results-directory "TestResults"
+    - name: Upload dotnet test results
+          uses: actions/upload-artifact@v3
+          with:
+            name: dotnet-results-${{ matrix.dotnet-version }}
+            path: TestResults-${{ matrix.dotnet-version }}
+          # Use always() to always run this step to publish test results when there are test failures
+          if: ${{ always() }}
+    - name: Publish
+      run: dotnet publish  ./webapp/TodosApp.Web/TodosApp.Web.csproj --no-build --verbosity normal --configuration Release
+  
