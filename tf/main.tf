@@ -29,3 +29,16 @@ resource "azurerm_service_plan" "todossp" {
   sku_name            = "F1"
 }
 
+# create linux web app in the app service plan
+resource "azurerm_linux_web_app" "todosapp" {
+  name = "btchoum-todos-web-app"
+  resource_group_name = azurerm_resource_group.todosrg.name
+  location = azurerm_resource_group.todosrg.location
+  service_plan_id = azurerm_service_plan.todossp.id
+  https_only = true
+
+  site_config {
+    always_on = false
+    minimum_tls_version = "1.2"
+  }
+}
