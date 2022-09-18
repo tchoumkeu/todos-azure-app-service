@@ -19,7 +19,7 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Restore dependencies
-      run: dotnet restore ./webapp/TodosApp.sln --configuration Release
+      run: dotnet restore ./webapp/TodosApp.sln
     - name: Build
       run: dotnet build ./webapp/TodosApp.sln --no-restore --configuration Release
     - name: Test
