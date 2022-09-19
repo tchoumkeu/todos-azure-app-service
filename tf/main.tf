@@ -40,5 +40,8 @@ resource "azurerm_linux_web_app" "todosapp" {
   site_config {
     always_on = false
     minimum_tls_version = "1.2"
+    application_stack {
+      dotnet_version = "6.0"
+    }
   }
 }
