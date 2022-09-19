@@ -26,7 +26,7 @@ resource "azurerm_service_plan" "todossp" {
   resource_group_name = azurerm_resource_group.todosrg.name
   location            = azurerm_resource_group.todosrg.location
   os_type             = "Linux"
-  sku_name            = "B1"
+  sku_name            = "S1"
 }
 
 # create linux web app in the app service plan
